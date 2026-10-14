@@ -1,0 +1,706 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap");
+
+/* --------------------------------------------------------------------------
+   Foundations
+   -------------------------------------------------------------------------- */
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #242326;
+  background: #f4efe7;
+  font-synthesis: none;
+  --ink: #242326;
+  --muted: #847d73;
+  --line: #d8d0c5;
+  --accent: #e96048;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+main {
+  max-width: 1320px;
+  margin: auto;
+  padding: 0 48px;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation and introduction
+   -------------------------------------------------------------------------- */
+.nav {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.logo {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  span,
+  em {
+    color: var(--accent);
+  }
+  em {
+    font-family: Georgia, serif;
+    font-weight: 400;
+  }
+}
+.nav a {
+  color: var(--ink);
+  text-decoration: none;
+  span {
+    color: var(--accent);
+    margin-left: 8px;
+    font-family: "DM Mono";
+  }
+}
+.hero {
+  padding: 76px 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.eyebrow {
+  color: var(--muted);
+  font-family: "DM Mono";
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.hero h1 {
+  font-size: clamp(58px, 8vw, 112px);
+  letter-spacing: -0.08em;
+  line-height: 0.92;
+  margin: 17px 0 25px;
+  font-weight: 600;
+  i {
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    letter-spacing: -0.08em;
+  }
+}
+.hero p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 390px;
+  margin: 0;
+}
+.hero-note {
+  color: var(--muted);
+  font-family: "DM Mono";
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  strong {
+    color: var(--ink);
+    font-weight: 400;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Studio preview
+   -------------------------------------------------------------------------- */
+.studio-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 58px;
+  align-items: start;
+}
+.preview-card {
+  background: #ded6c9;
+  min-height: 660px;
+  padding: 25px 27px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.preview-topline,
+.preview-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.preview-topline {
+  font-family: "DM Mono";
+  font-size: 10px;
+  color: #777064;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.sneaker-stage {
+  position: relative;
+  height: 470px;
+  display: grid;
+  place-items: center;
+  perspective: 800px;
+  overflow: hidden;
+}
+.sun {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  top: 2%;
+  right: 10%;
+  background: #efe4d0;
+  opacity: 0.65;
+}
+.sneaker-shadow {
+  position: absolute;
+  width: 470px;
+  height: 65px;
+  border-radius: 50%;
+  background: #aaa092;
+  opacity: 0.4;
+  transform: translate(10px, 120px) rotate(-8deg);
+  filter: blur(16px);
+}
+.sneaker {
+  position: relative;
+  width: 400px;
+  height: 270px;
+  transform: rotate(-12deg) translate(18px, 20px);
+  filter: drop-shadow(0 20px 10px rgba(65, 54, 42, 0.15));
+}
+.body {
+  position: absolute;
+  left: 100px;
+  top: 45px;
+  width: 230px;
+  height: 145px;
+  background: var(--upper);
+  border-radius: 24px 75px 20px 25px;
+  transform: skewY(-5deg);
+  overflow: hidden;
+}
+.heel {
+  position: absolute;
+  left: 61px;
+  top: 98px;
+  width: 98px;
+  height: 120px;
+  border-radius: 25px 10px 10px 30px;
+  background: var(--upper);
+  transform: skewY(5deg);
+}
+.ankle {
+  position: absolute;
+  left: 75px;
+  top: 69px;
+  height: 80px;
+  width: 60px;
+  border-radius: 25px 8px 0 0;
+  background: var(--upper);
+  transform: rotate(20deg);
+}
+.collar {
+  position: absolute;
+  left: 87px;
+  top: 53px;
+  height: 52px;
+  width: 86px;
+  border-radius: 50%;
+  background: #302f30;
+  transform: rotate(16deg);
+  z-index: 3;
+}
+.panel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 90px;
+  background: rgba(0, 0, 0, 0.1);
+}
+.stripe {
+  position: absolute;
+  width: 140px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.16);
+  top: 45px;
+  left: 70px;
+  transform: rotate(-28deg);
+}
+.toe {
+  position: absolute;
+  right: -9px;
+  top: 75px;
+  width: 128px;
+  height: 125px;
+  border-radius: 30px 90px 30px 30px;
+  background: var(--upper);
+  transform: rotate(6deg);
+}
+.lace-row {
+  position: absolute;
+  z-index: 5;
+  top: 37px;
+  left: 62px;
+  width: 120px;
+  transform: rotate(-11deg);
+}
+.lace-row i {
+  display: block;
+  width: 70px;
+  height: 9px;
+  background: var(--lace);
+  border-radius: 5px;
+  margin: 9px 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.lace-row i:nth-child(even) {
+  margin-left: 13px;
+}
+.sole {
+  position: absolute;
+  bottom: 34px;
+  left: 69px;
+  width: 310px;
+  height: 35px;
+  background: var(--sole);
+  border-radius: 20px 32px 23px 20px;
+  transform: rotate(-1deg);
+  z-index: 6;
+  box-shadow: inset 0 -5px rgba(0, 0, 0, 0.06);
+}
+.brand {
+  position: absolute;
+  z-index: 8;
+  right: 75px;
+  bottom: 77px;
+  font-family: "DM Mono";
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  transform: rotate(-15deg);
+}
+.preview-caption {
+  border-top: 1px solid rgba(40, 35, 29, 0.18);
+  padding-top: 19px;
+  h2 {
+    margin: 6px 0 0;
+    font-size: 21px;
+    letter-spacing: -0.04em;
+  }
+}
+.price-tag {
+  font-family: "DM Mono";
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Customizer form
+   -------------------------------------------------------------------------- */
+.customizer {
+  padding: 8px 0;
+}
+.form-heading {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 22px;
+  h2 {
+    font-size: 27px;
+    letter-spacing: -0.05em;
+    margin: 9px 0 0;
+  }
+}
+.step {
+  color: var(--accent);
+  font: 10px "DM Mono";
+  letter-spacing: 0.1em;
+}
+.name-field {
+  display: block;
+  padding: 24px 0 8px;
+  font: 10px "DM Mono";
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  input {
+    display: block;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    outline: none;
+    padding: 12px 0 11px;
+    width: 100%;
+    background: transparent;
+    color: var(--ink);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    &:focus {
+      border-color: var(--accent);
+    }
+  }
+}
+.option-group {
+  border: 0;
+  margin: 21px 0 0;
+  padding: 0;
+  legend {
+    padding: 0;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    small {
+      float: right;
+      color: var(--muted);
+      font: 10px "DM Mono";
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+  }
+}
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 11px;
+}
+.options.swatches {
+  grid-template-columns: repeat(4, 1fr);
+}
+.options.sizes {
+  grid-template-columns: repeat(6, 1fr);
+}
+.option {
+  position: relative;
+  border: 1px solid var(--line);
+  min-height: 60px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition:
+    border 0.15s,
+    background 0.15s;
+  &:hover,
+  &.selected {
+    border-color: var(--ink);
+    background: rgba(255, 255, 255, 0.28);
+  }
+  input {
+    position: absolute;
+    opacity: 0;
+  }
+}
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex: none;
+}
+.option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.option-copy strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.option-copy small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.option-price {
+  color: var(--muted);
+  font: 9px "DM Mono";
+  margin-left: auto;
+  align-self: flex-start;
+}
+.split-options {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+}
+.split-options .options.swatches {
+  grid-template-columns: repeat(3, 1fr);
+}
+.status {
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 22px;
+  &.error {
+    background: #f9d9d2;
+    color: #9e3526;
+  }
+  &.success {
+    background: #dbe4d6;
+    color: #46603e;
+  }
+}
+.form-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 26px;
+  padding-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  strong {
+    display: block;
+    font: 24px "DM Mono";
+    margin-top: 6px;
+  }
+  button:not(.text-button) {
+    background: var(--ink);
+    color: #fff;
+    border: 0;
+    padding: 17px 23px;
+    margin-left: auto;
+    font-size: 12px;
+    span {
+      color: var(--accent);
+      margin-left: 20px;
+      font-size: 17px;
+    }
+  }
+}
+.text-button {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Saved collection
+   -------------------------------------------------------------------------- */
+.collection {
+  padding: 150px 0 100px;
+}
+.section-heading {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  h2 {
+    margin: 9px 0 0;
+    font-size: 32px;
+    letter-spacing: -0.06em;
+  }
+  > span {
+    font: 10px "DM Mono";
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+}
+.empty-state {
+  min-height: 220px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: var(--muted);
+  font-family: "DM Mono";
+  font-size: 12px;
+  line-height: 1.7;
+}
+.empty-state span {
+  font-size: 25px;
+  color: var(--accent);
+}
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+  margin-top: 24px;
+}
+.saved-item {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.2);
+}
+.mini-sneaker {
+  height: 175px;
+  background: #ded6c9;
+  position: relative;
+  overflow: hidden;
+}
+.mini-sneaker div {
+  position: absolute;
+  width: 190px;
+  height: 75px;
+  background: var(--upper);
+  border-radius: 20px 58px 17px 20px;
+  left: 50%;
+  top: 52px;
+  transform: translateX(-42%) rotate(-12deg);
+  box-shadow: 0 24px 0 -3px var(--sole);
+}
+.saved-info,
+.saved-actions {
+  padding: 15px 16px;
+}
+.saved-info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  h3 {
+    margin: 7px 0 0;
+    font-size: 17px;
+    letter-spacing: -0.04em;
+  }
+  > strong {
+    font: 12px "DM Mono";
+  }
+}
+.saved-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font: 10px "DM Mono";
+  button {
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font-size: 11px;
+    padding: 0 0 0 14px;
+    & + button {
+      color: var(--accent);
+    }
+  }
+  div {
+    white-space: nowrap;
+  }
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+  color: var(--muted);
+  font: 10px "DM Mono";
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive layout
+   -------------------------------------------------------------------------- */
+@media (max-width: 850px) {
+  main {
+    padding: 0 22px;
+  }
+  .hero {
+    padding: 55px 0;
+    display: block;
+  }
+  .hero-note {
+    text-align: left;
+    margin-top: 35px;
+  }
+  .studio-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .preview-card {
+    min-height: 590px;
+  }
+  .sneaker-stage {
+    height: 400px;
+  }
+  .collection {
+    padding-top: 90px;
+  }
+  .saved-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .nav {
+    height: 68px;
+  }
+  .nav a {
+    font-size: 0;
+  }
+  .nav a span {
+    font-size: 10px;
+  }
+  .hero h1 {
+    font-size: 65px;
+  }
+  .preview-card {
+    min-height: 500px;
+    padding: 20px;
+  }
+  .sneaker-stage {
+    height: 320px;
+    transform: scale(0.78);
+    margin: -30px 0;
+  }
+  .split-options {
+    gap: 10px;
+    display: block;
+  }
+  .options,
+  .options.swatches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .options.sizes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .saved-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-footer {
+    flex-wrap: wrap;
+  }
+  .form-footer button:not(.text-button) {
+    margin-left: auto;
+  }
+  footer {
+    display: block;
+    line-height: 2;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Illustration sizing
+   -------------------------------------------------------------------------- */
+.sneaker-stage {
+  isolation: isolate;
+}
+.sneaker-art {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 590px;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 15px 12px rgba(61, 52, 43, 0.12));
+}
+.mini-sneaker {
+  display: grid;
+  place-items: center;
+}
+.mini-sneaker .sneaker-art {
+  width: 94%;
+  max-width: 340px;
+  filter: none;
+}
+@media (max-width: 560px) {
+  .sneaker-stage {
+    transform: none;
+    margin: 0;
+    height: 320px;
+  }
+}
