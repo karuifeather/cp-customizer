@@ -6,56 +6,77 @@ import SneakerPreview from "./components/SneakerPreview";
 import { EMPTY, money, OPTIONS, totalFor } from "./data/customizer";
 import "./styles.css";
 
+async function apiError(response, fallback) {
+  try {
+    const data = await response.json();
+    return data.error || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function App() {
   const [form, setForm] = useState(EMPTY);
   const [items, setItems] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   const total = useMemo(() => totalFor(form), [form]);
   const update = (key, value) =>
     setForm((current) => ({ ...current, [key]: value }));
 
+  async function loadItems() {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const response = await fetch("/api/items");
+      if (!response.ok) throw new Error("Could not load saved sneakers.");
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error("Invalid collection response.");
+      setItems(data);
+    } catch {
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
-    fetch("/api/items")
-      .then((response) => response.json())
-      .then(setItems)
-      .catch(() =>
-        setStatus({
-          type: "error",
-          message: "Connect your database to load saved sneakers.",
-        }),
-      )
-      .finally(() => setLoading(false));
+    loadItems();
   }, []);
 
   async function saveItem(event) {
     event.preventDefault();
     setStatus({ type: "", message: "" });
-    const response = await fetch(
-      editingId ? `/api/items/${editingId}` : "/api/items",
-      {
+    try {
+      const wasEditing = editingId !== null;
+      const response = await fetch(wasEditing ? `/api/items/${editingId}` : "/api/items", {
         method: editingId ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
-      },
-    );
-    const data = response.status === 204 ? null : await response.json();
-    if (!response.ok) return setStatus({ type: "error", message: data.error });
-    setItems((current) =>
-      editingId
-        ? current.map((item) => (item.id === editingId ? data : item))
-        : [data, ...current],
-    );
-    setForm(EMPTY);
-    setEditingId(null);
-    setStatus({
-      type: "success",
-      message: editingId
-        ? "Your sneaker was updated."
-        : "Your sneaker was saved to the collection.",
-    });
+      });
+      if (!response.ok)
+        throw new Error(await apiError(response, "Could not save this sneaker."));
+      const data = await response.json();
+      setItems((current) =>
+        wasEditing
+          ? current.map((item) => (item.id === editingId ? data : item))
+          : [data, ...current],
+      );
+      setLoadError(false);
+      setForm(EMPTY);
+      setEditingId(null);
+      setStatus({
+        type: "success",
+        message: wasEditing
+          ? "Your sneaker was updated."
+          : "Your sneaker was saved to the collection.",
+      });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message || "Could not save this sneaker." });
+    }
   }
 
   function editItem(item) {
@@ -73,10 +94,14 @@ function App() {
 
   async function deleteItem(id) {
     if (!window.confirm("Remove this sneaker from your collection?")) return;
-    const response = await fetch(`/api/items/${id}`, { method: "DELETE" });
-    if (response.ok) {
+    try {
+      const response = await fetch(`/api/items/${id}`, { method: "DELETE" });
+      if (!response.ok)
+        throw new Error(await apiError(response, "Could not remove this sneaker."));
       setItems((current) => current.filter((item) => item.id !== id));
       setStatus({ type: "success", message: "Sneaker removed." });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message || "Could not remove this sneaker." });
     }
   }
 
@@ -202,6 +227,11 @@ function App() {
         </div>
         {loading ? (
           <div className="empty-state">Loading your collection…</div>
+        ) : loadError ? (
+          <div className="empty-state">
+            <p>Could not load your collection.</p>
+            <button type="button" className="text-button" onClick={loadItems}>Try again</button>
+          </div>
         ) : items.length === 0 ? (
           <div className="empty-state">
             <span>✳</span>

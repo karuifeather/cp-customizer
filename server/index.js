@@ -59,6 +59,7 @@ app.get("/api/items", async (_req, res) => {
     );
     res.json(result.rows.map(toItem));
   } catch (error) {
+    console.error("Could not load saved sneakers:", error);
     res.status(500).json({ error: "Could not load saved sneakers." });
   }
 });
@@ -75,6 +76,7 @@ app.post("/api/items", async (req, res) => {
     );
     res.status(201).json(toItem(result.rows[0]));
   } catch (error) {
+    console.error("Could not save sneaker:", error);
     res.status(500).json({ error: "Could not save this sneaker." });
   }
 });
@@ -102,6 +104,7 @@ app.patch("/api/items/:id", async (req, res) => {
       return res.status(404).json({ error: "That sneaker no longer exists." });
     res.json(toItem(result.rows[0]));
   } catch (error) {
+    console.error("Could not update sneaker:", error);
     res.status(500).json({ error: "Could not update this sneaker." });
   }
 });
@@ -115,6 +118,7 @@ app.delete("/api/items/:id", async (req, res) => {
       return res.status(404).json({ error: "That sneaker no longer exists." });
     res.status(204).end();
   } catch (error) {
+    console.error("Could not delete sneaker:", error);
     res.status(500).json({ error: "Could not delete this sneaker." });
   }
 });

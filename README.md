@@ -15,7 +15,11 @@ The API creates the `custom_items` table automatically on startup. The schema is
 
 ## Render deployment
 
-`render.yaml` defines a Node web service and a Render PostgreSQL database. In Render, create a new Blueprint from this repository. Render will provision the database, inject `DATABASE_URL`, build the React app, and start the Express server. The production server serves the built Vite frontend and the `/api` routes from the same service.
+`render.yaml` defines a Node web service and a Render PostgreSQL database. In Render, create a new Blueprint from this repository or sync the existing Blueprint after pushing changes. Render will provision the database, inject its internal `DATABASE_URL`, build the React app, and start the Express server. The production server serves the built Vite frontend and the `/api` routes from the same service.
+
+Vite and its React plugin are regular dependencies so the existing `npm install && npm run build` command works even when the service sets `NODE_ENV=production`. The Blueprint uses `npm ci --include=dev` for a clean, reproducible install. If the web service was created manually instead of from the Blueprint, set its start command to `npm start` and `DATABASE_URL` to the database's internal URL. Check that `/api/items` returns a JSON array after deployment; an empty array is expected before the first sneaker is saved.
+
+The Blueprint uses Render's Free PostgreSQL plan, which expires after 30 days. Upgrade the database plan before its expiration if saved sneakers must remain available long term.
 
 ## API routes
 
